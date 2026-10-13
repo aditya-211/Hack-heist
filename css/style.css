@@ -523,6 +523,32 @@ a:focus-visible {
   width: 38%;
 }
 
+.vault-toggle {
+  visibility: hidden;
+}
+
+.bank-toggle:checked ~ .mint-bank .vault-toggle {
+  visibility: visible;
+}
+
+.vault-toggle:focus-visible + .vault .vault-hub {
+  outline: 2px solid var(--yellow);
+  outline-offset: 5px;
+}
+
+.vault-toggle:checked + .vault {
+  --vault-rotation: 40deg;
+  animation-name: vault-breathe-open;
+  border-color: rgb(227 59 78 / 82%);
+  box-shadow: 0 0 0 14px rgb(227 59 78 / 7%), 0 0 0 15px rgb(227 59 78 / 36%), 0 0 100px rgb(227 59 78 / 35%);
+}
+
+.vault-toggle:checked + .vault .vault-hub {
+  background: #351019;
+  color: #ff8b97;
+  box-shadow: 0 0 0 7px rgb(227 59 78 / 15%), 0 0 28px rgb(227 59 78 / 48%);
+}
+
 .mint-door {
   position: absolute;
   z-index: 2;
@@ -604,6 +630,10 @@ a:focus-visible {
   box-shadow: 0 5px 9px rgb(0 0 0 / 28%);
 }
 
+.interaction-toggle {
+  z-index: 6;
+}
+
 .bank-door-toggle {
   position: absolute;
   z-index: 5;
@@ -625,14 +655,14 @@ a:focus-visible {
   transition: color 180ms ease, background 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
 }
 
-.bank-door-toggle:hover {
+.bank-door-toggle:hover,
+.bank-toggle:focus-visible ~ .mint-bank .bank-door-toggle {
   border-color: #ff6876;
   background: #351019;
   box-shadow: 0 0 18px rgb(213 43 67 / 28%);
   color: #ff9aa4;
 }
 
-.bank-door-toggle:focus-visible,
 .bank-registration:focus-visible {
   outline: 2px solid var(--yellow);
   outline-offset: 4px;
@@ -642,6 +672,18 @@ a:focus-visible {
   color: var(--yellow);
   font-size: 17px;
   line-height: 1;
+}
+
+.bank-toggle-close-icon {
+  display: none;
+}
+
+.bank-toggle:checked ~ .mint-bank .bank-toggle-open-icon {
+  display: none;
+}
+
+.bank-toggle:checked ~ .mint-bank .bank-toggle-close-icon {
+  display: inline;
 }
 
 .bank-registration {
@@ -687,25 +729,25 @@ a:focus-visible {
   height: 16px;
 }
 
-.bank-open .mint-door-left {
+.bank-toggle:checked ~ .mint-bank .mint-door-left {
   transform: rotateY(-72deg);
 }
 
-.bank-open .mint-door-right {
+.bank-toggle:checked ~ .mint-bank .mint-door-right {
   transform: rotateY(72deg);
 }
 
-.bank-open .mint-door-seam {
+.bank-toggle:checked ~ .mint-bank .mint-door-seam {
   opacity: 0;
 }
 
-.bank-open .mint-entry .vault {
+.bank-toggle:checked ~ .mint-bank .mint-entry .vault {
   visibility: visible;
   opacity: 1;
   transform: translate(-50%, -50%) rotate(var(--vault-rotation, -8deg)) scale(1);
 }
 
-.bank-open .bank-registration {
+.bank-toggle:checked ~ .bank-registration {
   transform: translate(-50%, 0);
   visibility: visible;
   opacity: 1;
@@ -794,12 +836,6 @@ a:focus-visible {
   outline-offset: 5px;
 }
 
-.vault-open {
-  animation-name: vault-breathe-open;
-  border-color: rgb(227 59 78 / 82%);
-  box-shadow: 0 0 0 14px rgb(227 59 78 / 7%), 0 0 0 15px rgb(227 59 78 / 36%), 0 0 100px rgb(227 59 78 / 35%);
-}
-
 @keyframes vault-breathe-open {
   0%,
   100% {
@@ -809,12 +845,6 @@ a:focus-visible {
   50% {
     box-shadow: 0 0 0 18px rgb(227 59 78 / 9%), 0 0 0 19px rgb(227 59 78 / 42%), 0 0 116px rgb(227 59 78 / 44%);
   }
-}
-
-.vault-open .vault-hub {
-  background: #351019;
-  color: #ff8b97;
-  box-shadow: 0 0 0 7px rgb(227 59 78 / 15%), 0 0 28px rgb(227 59 78 / 48%);
 }
 
 .visually-hidden {
@@ -1317,22 +1347,6 @@ a:focus-visible {
   color: var(--yellow);
 }
 
-.scroll-reveal {
-  opacity: 1;
-  transform: translateY(0);
-  transition: opacity 560ms ease, transform 560ms cubic-bezier(0.2, 0.7, 0.2, 1);
-}
-
-.scroll-reveal-ready .scroll-reveal:not(.is-visible) {
-  opacity: 0;
-  transform: translateY(18px);
-}
-
-.scroll-reveal-ready .scroll-reveal.is-visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
 @media (min-width: 1500px) {
   .site-header,
   .site-footer {
@@ -1792,6 +1806,10 @@ a:focus-visible {
     animation: none;
   }
 
+  .vault-toggle:checked + .vault {
+    animation: none;
+  }
+
   .highlight-card:hover::before {
     transform: none;
   }
@@ -1801,11 +1819,4 @@ a:focus-visible {
     animation: none;
   }
 
-  .scroll-reveal-ready .scroll-reveal,
-  .scroll-reveal-ready .scroll-reveal:not(.is-visible),
-  .scroll-reveal-ready .scroll-reveal.is-visible {
-    opacity: 1;
-    transform: none;
-    transition: none;
-  }
 }
