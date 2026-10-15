@@ -212,8 +212,144 @@ a:focus-visible {
 .hero-content {
   position: relative;
   z-index: 2;
-  width: 100%;
+  width: 56%;
   max-width: 720px;
+}
+
+.hero-art {
+  position: absolute;
+  top: 50%;
+  right: 6.5%;
+  z-index: 1;
+  display: block;
+  width: min(39vw, 470px);
+  aspect-ratio: 1;
+  overflow: hidden;
+  pointer-events: none;
+  background:
+    linear-gradient(145deg, rgb(79 8 27 / 36%), rgb(8 5 8 / 58%)),
+    url("../assets/hero-starfield.jpg") center / cover no-repeat;
+  mask-image: radial-gradient(ellipse at center, #000 20%, rgb(0 0 0 / 88%) 49%, transparent 76%);
+  transform: translateY(-50%);
+}
+
+.hero-art::before,
+.hero-art::after {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  content: "";
+}
+
+.hero-art::before {
+  inset: 6%;
+  border-radius: 50%;
+  background: radial-gradient(ellipse, rgb(172 17 44 / 25%), rgb(94 10 30 / 12%) 38%, transparent 70%);
+  filter: blur(20px);
+  animation: hero-art-glow 8s ease-in-out infinite alternate;
+}
+
+.hero-art::after {
+  opacity: 0.22;
+  background: repeating-linear-gradient(0deg, transparent 0 7px, rgb(212 34 59 / 12%) 8px, transparent 9px);
+  mask-image: radial-gradient(ellipse, #000 15%, transparent 72%);
+}
+
+.hero-eclipse {
+  position: absolute;
+  top: 22%;
+  left: 24%;
+  width: 54%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: conic-gradient(
+    from 215deg,
+    transparent 0 24%,
+    rgb(135 17 39 / 30%) 31%,
+    rgb(216 43 67 / 78%) 43%,
+    rgb(120 16 37 / 24%) 55%,
+    transparent 65% 100%
+  );
+  filter: drop-shadow(0 0 26px rgb(165 24 48 / 34%));
+  animation: hero-eclipse-breathe 9s ease-in-out infinite alternate;
+}
+
+.hero-eclipse::after {
+  position: absolute;
+  inset: 4% 0 0 8%;
+  border-radius: inherit;
+  background: radial-gradient(circle at 38% 32%, #12090c, #060506 68%);
+  box-shadow: inset -12px -8px 24px rgb(0 0 0 / 75%);
+  content: "";
+}
+
+.hero-glitch {
+  position: absolute;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgb(228 48 72 / 70%), transparent);
+  opacity: 0.7;
+}
+
+.hero-glitch--one {
+  top: 31%;
+  left: 8%;
+  width: 36%;
+  box-shadow: 138px 11px 0 rgb(177 28 51 / 34%), 188px -9px 0 rgb(207 39 62 / 42%);
+  animation: hero-glitch-flicker 5s steps(1, end) infinite;
+}
+
+.hero-glitch--two {
+  top: 64%;
+  right: 7%;
+  width: 31%;
+  transform: translateX(-9px);
+}
+
+.hero-glitch--three {
+  top: 72%;
+  left: 19%;
+  width: 17%;
+  opacity: 0.4;
+}
+
+@keyframes hero-art-glow {
+  from {
+    opacity: 0.68;
+    transform: scale(0.96);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1.04);
+  }
+}
+
+@keyframes hero-eclipse-breathe {
+  from {
+    opacity: 0.82;
+    transform: rotate(-3deg);
+  }
+
+  to {
+    opacity: 1;
+    transform: rotate(3deg);
+  }
+}
+
+@keyframes hero-glitch-flicker {
+  0%,
+  38%,
+  40%,
+  74%,
+  76%,
+  100% {
+    opacity: 0.7;
+  }
+
+  39%,
+  75% {
+    opacity: 0.22;
+  }
 }
 
 .eyebrow,
@@ -900,6 +1036,15 @@ a:focus-visible {
     padding-left: 5%;
   }
 
+  .hero-content {
+    width: 52%;
+  }
+
+  .hero-art {
+    right: 1.5%;
+    width: 42vw;
+  }
+
   .section-wrap,
   .final-cta {
     padding-right: 7%;
@@ -988,11 +1133,20 @@ a:focus-visible {
     min-height: 680px;
     min-height: max(680px, 100svh);
     align-items: flex-start;
-    padding: 125px 23px 80px;
+    padding: 125px 23px 230px;
   }
 
   .hero-content {
     width: 100%;
+  }
+
+  .hero-art {
+    top: auto;
+    right: 5%;
+    bottom: 30px;
+    width: min(52vw, 230px);
+    transform: none;
+    opacity: 0.72;
   }
 
   .eyebrow {
@@ -1282,6 +1436,12 @@ a:focus-visible {
 
   .hero::before,
   .hero-grid {
+    animation: none;
+  }
+
+  .hero-art::before,
+  .hero-eclipse,
+  .hero-glitch--one {
     animation: none;
   }
 }
